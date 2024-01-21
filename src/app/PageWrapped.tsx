@@ -1,43 +1,35 @@
 'use client'
 
 import React, { Suspense } from 'react'
-import { Wait } from './components/Wait'
+import { Wait, Wait2 } from './components/Wait'
 import { useQueryClient } from '@tanstack/react-query'
 import { wrap } from '@suspensive/react'
 import { waitQuery } from '~/react-query'
 import { SuspenseQuery } from '~/react-query/SuspenseQuery'
 
-export default wrap
-  .ErrorBoundary({
-    fallback: ({ error }) => 'error!!' + error.message,
-  })
-  .Suspense({
-    fallback: 'loading...',
-  })
-  .on(function Page() {
-    const queryClient = useQueryClient()
-
+export default function HomePageContent() {
     return (
       <>
+      <Suspense fallback={<div>loading 100</div>}>
         <Wait ms={100} />
+        </Suspense>
+        <Suspense fallback={<div>loading 200</div>}>
         <Wait ms={200} />
+        </Suspense>
+        <Suspense fallback={<div>loading 300</div>}>
         <Wait ms={300} />
-        <Wait ms={400} />
+        </Suspense>
+        <Suspense fallback={<div>loading 400</div>}>
+        <Wait2 ms={400} />
+        </Suspense>
+        <Suspense fallback={<div>loading 505</div>}>
+        <Wait2 ms={505} />
+        </Suspense>
+        {/* <Wait ms={400} />
         <Wait ms={500} />
         <Wait ms={600} />
-        <Wait ms={700} />
-        <Suspense fallback="loading...">
-          <SuspenseQuery options={waitQuery(100)}>
-            {({ data }) => <li>{data}</li>}
-          </SuspenseQuery>
-        </Suspense>
-        <Suspense fallback="loading...">
-          <SuspenseQuery options={waitQuery(100)}>
-            {({ data }) => <>{data}</>}
-          </SuspenseQuery>
-        </Suspense>
-
-        <button onClick={() => queryClient.resetQueries()}>
+        <Wait ms={700} /> */}
+        {/* <button onClick={() => queryClient.resetQueries()}>
           resetQueries all
         </button>
 
@@ -57,7 +49,7 @@ export default wrap
           }}
         >
           invalidate 200
-        </button>
+        </button> */}
 
         <fieldset>
           <legend>
@@ -79,4 +71,5 @@ export default wrap
         </fieldset>
       </>
     )
-  })
+   
+  }
